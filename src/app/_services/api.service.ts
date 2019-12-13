@@ -1,20 +1,34 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Item } from '../types/item.interface';
+import { TodoResponseSuccess } from '../types/todo-response-success.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-	constructor() {}
+	constructor (
+    private readonly http: HttpClient,
+  ) {}
 
-	public getCurrentItem(): any {}
+	public getItemByID(id: string): Observable<Item> {
+	  return this.http.get<Item>(`todo/${id}`);
+  }
 
-  public setCurrentItem(item: any) {}
+  public getAllItems(): Observable<Item[]> {
+	  return this.http.get<Item[]>('todo/list');
+  }
 
-  public getItems(): any {}
+  public removeItem (id: string): Observable<void> {
+	  return this.http.delete<void>(`todo/${id}`);
+  }
 
-  public removeItem(item: any): any {}
+  public saveItem(item: Item): Observable<TodoResponseSuccess> {
+	  return this.http.post<TodoResponseSuccess>('todo', item);
+  }
 
-  public addItem(item: any): any {}
-
-  public updateItem(item: any): any {}
+  public updateItemStatus(id: string, status: boolean): Observable<TodoResponseSuccess> {
+    return this.http.put<TodoResponseSuccess>(`todo/${id}`, { isDone: status });
+  }
 }

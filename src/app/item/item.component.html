@@ -1,0 +1,28 @@
+<form novalidate (ngSubmit)="submit()" [formGroup]="form">
+
+	<span></span>
+
+    <div class="form-group">
+        <label for="text">Item text</label>
+        <input class="form-control"
+               id="text"
+               type="text"
+               [formControl]="form.controls[formsContract.Item.TEXT]"
+        >
+
+      <br/>
+
+      <label for="status">Is done?</label>
+      <input class="item-checkbox"
+             type="checkbox"
+             id="status"
+             [formControl]="form.controls[formsContract.Item.IS_DONE]"
+      >
+    </div>
+
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit">Save</button>
+        <a routerLink="/" class="btn btn-link">Cancel</a>
+    </div>
+
+</form>
